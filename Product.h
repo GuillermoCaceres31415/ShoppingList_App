@@ -19,7 +19,11 @@ public:
 
     ~Product()=default;
 
+    const std::string &getNameProduct() const;
 
+    const std::string &getCategory() const;
+
+    unsigned int getQty() const;
 
 };
 

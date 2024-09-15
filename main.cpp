@@ -2,6 +2,8 @@
 #include "Account.h"
 #include "unordered_map"
 
+void ShowMainMenu(Account &account,bool &loop);
+
 int main() {
 
     std::unordered_map<std::string,Account> DataBase;
@@ -12,7 +14,7 @@ int main() {
 
         std::cout << R"(
 ╔═════════════════════════════════════════╗
-║    BENVENUTO IN SHOPPING LIST APP       ║
+║            MENU DI LOGIN                ║
 ╠═════════════════════════════════════════╣
 ║                                         ║
 ║    [1] 📝 Crea un nuovo account         ║
@@ -42,6 +44,7 @@ int main() {
                     DataBase.insert(std::pair<std::string, Account>(name, account));
                 } else
                     std::cerr << "nome utente già usato" << std::endl;
+                ShowMainMenu(account,loop);
 
                 break;
             }
@@ -59,10 +62,11 @@ int main() {
                     std::cin >> password;
                     if (password == (it->second).getPassword()) {
                         Account account = (it->second);
+                        ShowMainMenu(account,loop);
                     } else
-                        std::cerr << "password errata" << std::endl;
+                        std::cout << "password errata" << std::endl;
                 } else
-                    std::cerr << "nome utente non trovato" << std::endl;
+                    std::cout << "nome utente non trovato" << std::endl;
 
             }
             case 3:
@@ -70,14 +74,103 @@ int main() {
                 break;
 
             default:
-                std::cerr << "comando non valido" << std::endl;
+                std::cout << "comando non valido" << std::endl;
 
 
         }
 
+    }
+
+    return 0;
+
+}
+
+void ShowMainMenu(Account &account,bool &loop){
+
+bool innerLoop= true;
+    while (innerLoop) {
+        std::cout << R"(
+╔═════════════════════════════════════════╗
+║    BENVENUTO )" << account.getName() << R"(                       ║
+╠═════════════════════════════════════════╣
+║    N° PRODOTTI:)" << 40 << R"(                       ║
+╠═════════════════════════════════════════╣
+║                                         ║
+║    [1] AGGIUNGI PRODOTTO                ║
+║    [2] RIMUOVERE PRODOTTO               ║
+║    [3] STAMPA LISTA                     ║
+║    [4] ESCI                             ║
+║                                         ║
+║                                         ║
+╚═════════════════════════════════════════╝
+)" << std::endl;
+
+        std::cout << "inserire un comando: ";
+        int command;
+        std::cin >> command;
+
+        switch (command) {
+            case 1: {
+
+                std::cout << "inserire nome prodotto: ";
+                std::string nameProduct;
+                std::cin >> nameProduct;
+
+                std::cout << "inserire categoria: ";
+                std::string CategoryProduct;
+                std::cin >> CategoryProduct;
+
+                std::cout << "inserire quantità: ";
+                unsigned int qty;
+                std::cin >> qty;
+
+                ShoppingList shoppingList;
+
+                shoppingList=account.getList();
+
+                shoppingList.AddProduct(nameProduct,CategoryProduct,qty);
+
+                account.setList(shoppingList);
+
+
+
+                break;
+            }
+            case 2: {
+                std::cout << "inserire nome prodotto: ";
+                std::string nameProduct;
+                std::cin >> nameProduct;
+
+                ShoppingList shoppingList;
+
+                shoppingList=account.getList();
+
+                shoppingList.RemoveProduct(nameProduct);
+
+                account.setList(shoppingList);
+
+                break;
+            }
+            case 3: {
+                account.getList().PrintList();
+                break;
+            }
+            case 4:
+                innerLoop= false;
+                loop = false;
+                break;
+
+            default:
+                std::cout << "comando non valido" << std::endl;
+        }
 
     }
 
+std::string ba="ff";
+ShoppingList shoppingList;
+shoppingList.AddProduct(ba,ba,5);
+shoppingList.AddProduct(ba,ba,5);
+shoppingList.PrintList();
 
-    return 0;
+
 }

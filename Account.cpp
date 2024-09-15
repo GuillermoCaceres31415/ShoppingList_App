@@ -4,13 +4,21 @@
 
 #include "Account.h"
 
-Account::Account(std::string &n, std::string& p) :name(n),password(p),list(nullptr){}
+Account::Account(std::string &n, std::string& p) :name(n),password(p),list(){}
 
 const std::string &Account::getName() const {
     return name;
 }
 
-const std::string &Account::getPassword() const {
+ std::string Account::getPassword() const {
     return password;
+}
+
+ ShoppingList Account::getList() const {
+    return list;
+}
+
+void Account::setList(const ShoppingList &list) {
+    Account::list = list;
 }
 

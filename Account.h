@@ -11,15 +11,18 @@ class Account {
 private:
     std::string name;
     std::string password;
-    ShoppingList *list;
+    ShoppingList list;
 public:
     Account(std::string& n,std::string& p);
 
 
     const std::string &getName() const;
 
-    const std::string &getPassword() const;
+     std::string getPassword() const;
 
+     ShoppingList getList() const;
+
+    void setList(const ShoppingList &list);
 };
 
 
