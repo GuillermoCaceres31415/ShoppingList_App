@@ -17,7 +17,7 @@ public:
 
     virtual ~DisplayShowQty();
 
-    std::string ShowQty();
+    void ShowQty();
 
     void attach()override;
 

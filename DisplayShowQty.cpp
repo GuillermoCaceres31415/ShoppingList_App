@@ -24,6 +24,11 @@ void DisplayShowQty::update() {
     ShowQty();
 }
 
-std::string DisplayShowQty::ShowQty() {
-    return std::to_string(qty);
+void DisplayShowQty::ShowQty() {
+    std::cout<< R"(
+╔═════════════════════════════════════════╗
+║       N° prodotti )" << qty<<  R"(                  ║
+╚═════════════════════════════════════════╝
+
+)";
 }

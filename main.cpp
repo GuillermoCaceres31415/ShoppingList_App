@@ -26,7 +26,7 @@ int main() {
         int command;
         std::cout<<"inserire un comando: ";
         std::cin >> command;
-        Account *account = nullptr;
+        Account *account ;
 
         switch (command) {
             case 1: { // crea account
@@ -69,6 +69,7 @@ int main() {
                 break;
             }
             case 3:
+                std::cout<<"uscita in corso...";
                 loop= false;
                 break;
             default:
@@ -81,17 +82,13 @@ int main() {
 
 void ShowMainMenu(Account &account) {
 
-
-
     DisplayShowQty displayShowQty(&account.getList());
 
     bool innerLoop = true;
     while (innerLoop) {
         std::cout << R"(
 ╔═════════════════════════════════════════╗
-║    BENVENUTO )" << account.getName() << R"(                      ║
-╠═════════════════════════════════════════╣
-║    N° PRODOTTI:)" << displayShowQty.ShowQty() << R"(                       ║
+║    BENVENUTO )" << account.getName() << R"(                    ║
 ╠═════════════════════════════════════════╣
 ║                                         ║
 ║    [1] AGGIUNGI PRODOTTO                ║
@@ -121,6 +118,7 @@ void ShowMainMenu(Account &account) {
                 std::cin >> qty;
 
                 account.getList().AddProduct(nameProduct, CategoryProduct, qty);
+
                 std::cout << "prodotto aggiunto con successo" << std::endl;
 
                 break;
