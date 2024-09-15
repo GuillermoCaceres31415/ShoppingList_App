@@ -10,7 +10,8 @@
 void ShoppingList::AddProduct(std::string &name,std::string &category,unsigned int Product_qty) {
     auto *product=new Product (name,category,Product_qty);
     list.push_back(product);
-    qty=qty+Product_qty; //
+    qty=qty+Product_qty;
+    notify();
 }
 
 void ShoppingList::RemoveProduct(std::string &name) {
@@ -18,6 +19,7 @@ void ShoppingList::RemoveProduct(std::string &name) {
         if ((*itr).getNameProduct() == name) {
             list.remove(itr);
             qty=qty-(*itr).getQty();
+            notify();
             return;
         }
     }
@@ -32,5 +34,23 @@ void ShoppingList::PrintList() {
         for (auto itr: list)
             itr->printProduct();
     }
+}
+
+void ShoppingList::subscribe(Observer *o) {
+    observers.push_back(o);
+}
+
+void ShoppingList::unsubscribe(Observer *o) {
+    observers.push_back(o);
+}
+
+void ShoppingList::notify() {
+    for (auto itr=std::begin(observers);itr!=std::end(observers);itr++){
+        (*itr)->update();
+    }
+}
+
+unsigned int ShoppingList::getQty() const {
+    return qty;
 }
 

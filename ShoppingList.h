@@ -6,12 +6,14 @@
 #define SHOPPINGLIST_APP_SHOPPINGLIST_H
 #include "Product.h"
 #include <list>
+#include "Subject.h"
+#include "Observer.h"
 
-
-class ShoppingList {
+class ShoppingList: public Subject{
 private:
-    std::list<Product*> list;
     unsigned int qty;
+    std::list<Product*> list;
+    std::list<Observer*>observers;
 public:
     ShoppingList():qty(0){}
 
@@ -20,6 +22,14 @@ public:
     void RemoveProduct(std::string &name);
 
     void PrintList();
+
+    void subscribe(Observer*o)override;
+
+    void unsubscribe(Observer*o)override;
+
+    void notify()override;
+
+    unsigned int getQty() const;
 
     ~ShoppingList()=default;
 

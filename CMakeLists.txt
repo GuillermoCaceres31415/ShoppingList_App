@@ -9,4 +9,8 @@ add_executable(ShoppingList_App main.cpp
         Product.cpp
         Product.h
         ShoppingList.cpp
-        ShoppingList.h)
+        ShoppingList.h
+        Subject.h
+        Observer.h
+        DisplayShowQty.cpp
+        DisplayShowQty.h)

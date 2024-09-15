@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Account.h"
 #include "unordered_map"
+#include "DisplayShowQty.h"
+
 
 void ShowMainMenu(Account &account);
 
@@ -24,6 +26,7 @@ int main() {
         int command;
         std::cout<<"inserire un comando: ";
         std::cin >> command;
+        Account *account = nullptr;
 
         switch (command) {
             case 1: { // crea account
@@ -35,11 +38,13 @@ int main() {
                 std::string password;
                 std::cin >> password;
 
-                Account account(name, password);
+                 account=new Account(name, password);
 
                 if (DataBase.find(name) == DataBase.end()) {
-                    DataBase.insert({name, account});
+                    DataBase.insert({name, *account});
+
                     ShowMainMenu(DataBase.find(name)->second);
+
                 } else
                     std::cout << "nome utente già usato" << std::endl;
                 break;
@@ -75,13 +80,18 @@ int main() {
 }
 
 void ShowMainMenu(Account &account) {
+
+
+
+    DisplayShowQty displayShowQty(&account.getList());
+
     bool innerLoop = true;
     while (innerLoop) {
         std::cout << R"(
 ╔═════════════════════════════════════════╗
-║    BENVENUTO )" << account.getName() << R"(                    ║
+║    BENVENUTO )" << account.getName() << R"(                      ║
 ╠═════════════════════════════════════════╣
-║    N° PRODOTTI:)" << 0 << R"(              ║
+║    N° PRODOTTI:)" << displayShowQty.ShowQty() << R"(                       ║
 ╠═════════════════════════════════════════╣
 ║                                         ║
 ║    [1] AGGIUNGI PRODOTTO                ║
@@ -110,7 +120,6 @@ void ShowMainMenu(Account &account) {
                 unsigned int qty;
                 std::cin >> qty;
 
-                // Modifica direttamente la lista dell'account
                 account.getList().AddProduct(nameProduct, CategoryProduct, qty);
                 std::cout << "prodotto aggiunto con successo" << std::endl;
 

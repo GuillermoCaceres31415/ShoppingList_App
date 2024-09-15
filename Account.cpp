@@ -6,8 +6,6 @@
 
 Account::Account(std::string &n, std::string& p) :name(n),password(p),list(){}
 
-
-
 const std::string &Account::getName() const {
     return name;
 }
