@@ -15,7 +15,7 @@ private:
 public:
     ShoppingList():qty(0){}
 
-    void AddProduct(std::string &name,std::string &category,unsigned int qty);
+    void AddProduct(std::string &name,std::string &category,unsigned int Product_qty);
 
     void RemoveProduct(std::string &name);
 

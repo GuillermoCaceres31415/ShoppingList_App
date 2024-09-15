@@ -15,14 +15,12 @@ private:
 public:
     Account(std::string& n,std::string& p);
 
-
     const std::string &getName() const;
 
      std::string getPassword() const;
 
-     ShoppingList getList() const;
+     ShoppingList &getList() ;
 
-    void setList(const ShoppingList &list);
 };
 
 

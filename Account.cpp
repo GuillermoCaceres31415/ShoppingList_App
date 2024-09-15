@@ -6,6 +6,8 @@
 
 Account::Account(std::string &n, std::string& p) :name(n),password(p),list(){}
 
+
+
 const std::string &Account::getName() const {
     return name;
 }
@@ -14,11 +16,8 @@ const std::string &Account::getName() const {
     return password;
 }
 
- ShoppingList Account::getList() const {
+ ShoppingList &Account::getList()  {
     return list;
 }
 
-void Account::setList(const ShoppingList &list) {
-    Account::list = list;
-}
 

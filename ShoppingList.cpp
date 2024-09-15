@@ -7,17 +7,17 @@
 #include "ShoppingList.h"
 
 
-void ShoppingList::AddProduct(std::string &name,std::string &category,unsigned int qty) {
-    Product *product=new Product (name,category,qty);
+void ShoppingList::AddProduct(std::string &name,std::string &category,unsigned int Product_qty) {
+    auto *product=new Product (name,category,Product_qty);
     list.push_back(product);
-    qty=qty+product->getQty();
+    qty=qty+Product_qty; //
 }
 
 void ShoppingList::RemoveProduct(std::string &name) {
-    for (auto itr = list.begin(); itr != list.end(); ++itr) {
-        if ((*itr)->getNameProduct() == name) {
-            delete *itr; // Dealloca l'oggetto
-            list.erase(itr); // Rimuovi il puntatore dalla lista
+    for (auto itr :list) {
+        if ((*itr).getNameProduct() == name) {
+            list.remove(itr);
+            qty=qty-(*itr).getQty();
             return;
         }
     }

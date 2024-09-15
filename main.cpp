@@ -2,16 +2,13 @@
 #include "Account.h"
 #include "unordered_map"
 
-void ShowMainMenu(Account &account,bool &loop);
+void ShowMainMenu(Account &account);
 
 int main() {
-
     std::unordered_map<std::string,Account> DataBase;
-
     bool loop= true;
 
     while (loop) {
-
         std::cout << R"(
 ╔═════════════════════════════════════════╗
 ║            MENU DI LOGIN                ║
@@ -30,70 +27,61 @@ int main() {
 
         switch (command) {
             case 1: { // crea account
-                std::cout << "si scelga un nome: ";
+                std::cout << "scegliere un nome: ";
                 std::string name;
                 std::cin >> name;
 
-                std::cout << "si sclega una password: ";
+                std::cout << "crea una password: ";
                 std::string password;
                 std::cin >> password;
 
                 Account account(name, password);
 
                 if (DataBase.find(name) == DataBase.end()) {
-                    DataBase.insert(std::pair<std::string, Account>(name, account));
+                    DataBase.insert({name, account});
+                    ShowMainMenu(DataBase.find(name)->second);
                 } else
-                    std::cerr << "nome utente già usato" << std::endl;
-                ShowMainMenu(account,loop);
-
+                    std::cout << "nome utente già usato" << std::endl;
                 break;
             }
-            case 2: {
-                std::cout << "si scriva il nome: ";
+            case 2: {  // log-in account
+                std::cout << "scrivere il nome dell'account: ";
                 std::string name;
                 std::cin >> name;
 
-
-                auto it = DataBase.find(name);
-
-                if (it != DataBase.end()) {
-                    std::cout << "si scriva la password: ";
+                if (DataBase.find(name) != DataBase.end()) {
+                    std::cout << "scrivere la password: ";
                     std::string password;
                     std::cin >> password;
-                    if (password == (it->second).getPassword()) {
-                        Account account = (it->second);
-                        ShowMainMenu(account,loop);
-                    } else
+                    if (password == DataBase.find(name)->second.getPassword()) {
+                        ShowMainMenu(DataBase.find(name)->second);
+                    } else {
                         std::cout << "password errata" << std::endl;
-                } else
+                    }
+                } else {
                     std::cout << "nome utente non trovato" << std::endl;
-
+                }
+                break;
             }
             case 3:
                 loop= false;
                 break;
-
             default:
-                std::cout << "comando non valido" << std::endl;
-
-
+                std::cout<<"inserire un comando valido"<<std::endl;
+                break;
         }
-
     }
-
     return 0;
-
 }
 
-void ShowMainMenu(Account &account,bool &loop){
-
-bool innerLoop= true;
+void ShowMainMenu(Account &account) {
+    bool innerLoop = true;
     while (innerLoop) {
         std::cout << R"(
 ╔═════════════════════════════════════════╗
-║    BENVENUTO )" << account.getName() << R"(                       ║
+║    BENVENUTO )" << account.getName() << R"(                    ║
 ╠═════════════════════════════════════════╣
-║    N° PRODOTTI:)" << 40 << R"(                       ║
+║    N° PRODOTTI:)" << 0 << R"(              ║
 ╠═════════════════════════════════════════╣
 ║                                         ║
 ║    [1] AGGIUNGI PRODOTTO                ║
@@ -101,17 +89,15 @@ bool innerLoop= true;
 ║    [3] STAMPA LISTA                     ║
 ║    [4] ESCI                             ║
 ║                                         ║
-║                                         ║
 ╚═════════════════════════════════════════╝
 )" << std::endl;
 
-        std::cout << "inserire un comando: ";
         int command;
+        std::cout << "inserire un comando: ";
         std::cin >> command;
 
         switch (command) {
-            case 1: {
-
+            case 1: {  // Aggiungi prodotto
                 std::cout << "inserire nome prodotto: ";
                 std::string nameProduct;
                 std::cin >> nameProduct;
@@ -124,53 +110,33 @@ bool innerLoop= true;
                 unsigned int qty;
                 std::cin >> qty;
 
-                ShoppingList shoppingList;
-
-                shoppingList=account.getList();
-
-                shoppingList.AddProduct(nameProduct,CategoryProduct,qty);
-
-                account.setList(shoppingList);
-
-
+                // Modifica direttamente la lista dell'account
+                account.getList().AddProduct(nameProduct, CategoryProduct, qty);
+                std::cout << "prodotto aggiunto con successo" << std::endl;
 
                 break;
             }
-            case 2: {
+            case 2: {  // Rimuovi prodotto
                 std::cout << "inserire nome prodotto: ";
                 std::string nameProduct;
                 std::cin >> nameProduct;
 
-                ShoppingList shoppingList;
-
-                shoppingList=account.getList();
-
-                shoppingList.RemoveProduct(nameProduct);
-
-                account.setList(shoppingList);
+                account.getList().RemoveProduct(nameProduct);
+                std::cout << "prodotto rimosso con successo" << std::endl;
 
                 break;
             }
-            case 3: {
+            case 3:  // Stampa lista
                 account.getList().PrintList();
                 break;
-            }
-            case 4:
-                innerLoop= false;
-                loop = false;
+
+            case 4:  // Esci dal menu
+                innerLoop = false;
                 break;
 
             default:
                 std::cout << "comando non valido" << std::endl;
         }
-
     }
-
-std::string ba="ff";
-ShoppingList shoppingList;
-shoppingList.AddProduct(ba,ba,5);
-shoppingList.AddProduct(ba,ba,5);
-shoppingList.PrintList();
-
-
 }
+
