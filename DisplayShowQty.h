@@ -15,9 +15,9 @@ private:
 public:
     explicit DisplayShowQty(ShoppingList*sub);
 
-    virtual ~DisplayShowQty();
+     ~DisplayShowQty()override;
 
-    void ShowQty();
+    void ShowQty() const;
 
     void attach()override;
 

@@ -113,9 +113,11 @@ void ShowMainMenu(Account &account) {
                 std::string CategoryProduct;
                 std::cin >> CategoryProduct;
 
-                std::cout << "inserire quantità: ";
                 unsigned int qty;
-                std::cin >> qty;
+                do {
+                    std::cout << "inserire quantità: ";
+                    std::cin >> qty;
+                }while(qty==0);
 
                 account.getList().AddProduct(nameProduct, CategoryProduct, qty);
 

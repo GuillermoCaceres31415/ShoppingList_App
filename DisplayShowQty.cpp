@@ -24,10 +24,10 @@ void DisplayShowQty::update() {
     ShowQty();
 }
 
-void DisplayShowQty::ShowQty() {
+void DisplayShowQty::ShowQty() const {
     std::cout<< R"(
 ╔═════════════════════════════════════════╗
-║       N° prodotti )" << qty<<  R"(                  ║
+║       N° prodotti: )" << qty<<  R"(                     ║
 ╚═════════════════════════════════════════╝
 
 )";
